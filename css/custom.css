@@ -27,11 +27,14 @@ ul.dropdown-lr {
     background-repeat: no-repeat;
     color: white;
     text-shadow: black 0.3em 0.3em 0.3em;
-    min-height: 600px;
-    
+    min-height: 600px;  
 }
 #navbar {
 	color: hotpink;
+}
+#title {
+	margin-top: 12em;
+	margin-left: 23em;
 }
 #thumbs {
 	margin-top: 5em;
@@ -39,4 +42,17 @@ ul.dropdown-lr {
 .thumbnail {
 	background-color: hotpink;
 	border:  5px solid indigo;
+}
+/* Button Style override */
+.indigo-background {
+	background-color: 	#4B0082;
+}
+.white {
+	color: #FFFFFF;
+}
+.caption {
+	text-align:  center;
+}
+footer {
+	text-align:  center;
 }

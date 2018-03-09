@@ -199,6 +199,8 @@
    }
   }
  }
+
+
 ?>
 
 
@@ -239,7 +241,6 @@
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="">Home</a></li>
-          <li><a href="">About</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
@@ -342,54 +343,56 @@
 
     <main role="main">
 
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron p-5">
-        <div class="container">
+      <!-- Main jumbotron -->
+      <div class="jumbotron">
+        <div class="container" id="title">
           <h1 class="display-3">Psy Events</h1>
           <p>Partys, People and more...</p>
         </div>
       </div>
 
-      <div class="container" id="thumbs"> 
-      <div class="row">
-  <div class="col-md-4">
-    <div class="thumbnail">      
-        <img src="img/ev1.jpg" alt="party" style="width:100%">
-        <div class="caption">
-          <p>Lorem ipsum...</p>
-           <a href="#" class="btn btn-primary">See Profile</a>
-        </div>
-      </a>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="thumbnail">
-        <img src="img/ev2.jpg" alt="party" style="width:100%">
-        <div class="caption">
-          <p>Lorem ipsum...</p>
-           <a href="#" class="btn btn-primary">See Profile</a>
-        </div>
-      </a>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="thumbnail">
-        <img src="img/ev3.jpg" alt="Fjords" style="width:100%">
-        <div class="caption">
-          <p>Lorem ipsum...</p>
-           <a href="#" class="btn btn-primary">See Profile</a>
-        </div>
-      </a>
-    </div>
-  </div>
-</div>
 
-      </div> <!-- /container -->
+
+
+<!-- Thumbnails for Events -->
+      <div class="container" id="thumbs"> 
+        <div class="row">
+
+<?php 
+
+
+// --------------Data from Database-------------  //
+$sql = "SELECT event.image, event.name, event.event_date 
+    FROM event";
+
+    $result = mysqli_query($conn, $sql);
+
+      while ($row = mysqli_fetch_assoc($result)) {
+
+
+echo
+
+          "<div class='col-md-4'>
+            <div class='thumbnail'>      
+            <img src='" . $row["image"] . "' style='width:100%'>
+              <div class='caption'>
+                <h3>" . $row["name"] ."</h3>
+                <h4>" . $row["event_date"] . "</h4>
+                <a href='#'' class='btn btn-primary indigo-background white'>more...</a>
+              </div>
+            </div>
+          </div>";
+}
+?>
+        </div>  <!-- endof row -->
+       </div>  <!-- endof container -->
+
 
     </main>
 
     <footer class="container">
-      <p>&copy; Company 2017-2018</p>
+      <p>&copy; polypixx - 2018</p>
+      <p>all pictures &copy;  by Angela Armstorfer</p>
     </footer> 
   
 
@@ -409,3 +412,5 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
+
+<?php ob_end_flush(); ?>
