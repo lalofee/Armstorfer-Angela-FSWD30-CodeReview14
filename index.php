@@ -11,6 +11,8 @@
 
   $error = false;
 
+  // --------------------PHP für LOGIN----------------------------------  //
+
  if( isset($_POST['btn-login']) ) {
 
   // prevent sql injections/ clear user invalid inputs
@@ -53,6 +55,150 @@
   }
  }
 
+
+  // --------------------PHP für REGISTRATION----------------------------------  //
+
+
+ if ( isset($_POST['btn-signup']) ) {
+
+ 
+
+  // sanitize user input to prevent sql injection
+
+  $name = trim($_POST['name']);
+
+  $name = strip_tags($name);
+
+  $name = htmlspecialchars($name);
+
+ 
+
+  $email = trim($_POST['email']);
+
+  $email = strip_tags($email);
+
+  $email = htmlspecialchars($email);
+
+ 
+
+  $pass = trim($_POST['pass']);
+
+  $pass = strip_tags($pass);
+
+  $pass = htmlspecialchars($pass);
+
+ 
+
+  // basic name validation
+
+  if (empty($name)) {
+
+   $error = true;
+
+   $nameError = "Please enter your full name.";
+
+  } else if (strlen($name) < 3) {
+
+   $error = true;
+
+   $nameError = "Name must have atleat 3 characters.";
+
+  } else if (!preg_match("/^[a-zA-Z ]+$/",$name)) {
+
+   $error = true;
+
+   $nameError = "Name must contain alphabets and space.";
+
+  }
+
+ 
+
+  //basic email validation
+
+  if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
+
+   $error = true;
+
+   $emailError = "Please enter valid email address.";
+
+  } else {
+
+   // check whether the email exist or not
+
+   $query = "SELECT userEmail FROM users WHERE userEmail='$email'";
+
+   $result = mysqli_query($conn, $query);
+
+   $count = mysqli_num_rows($result);
+
+   if($count!=0){
+
+    $error = true;
+
+    $emailError = "Provided Email is already in use.";
+
+   }
+
+  }
+
+
+  // password validation
+
+  if (empty($pass)){
+
+   $error = true;
+
+   $passError = "Please enter password.";
+
+  } else if(strlen($pass) < 6) {
+
+   $error = true;
+
+   $passError = "Password must have atleast 6 characters.";
+
+  }
+
+ 
+
+  // password encrypt using SHA256();
+
+  $password = hash('sha256', $pass);
+
+ 
+
+  // if there's no error, continue to signup
+
+  if( !$error ) {
+
+   
+
+   $query = "INSERT INTO users(userName,userEmail,userPass) VALUES('$name','$email','$password')";
+
+   $res = mysqli_query($conn, $query);
+
+   
+
+   if ($res) {
+
+    $errTyp = "success";
+
+    $errMSG = "Successfully registered, you may login now";
+
+    unset($name);
+
+    unset($email);
+
+    unset($pass);
+
+   } else {
+
+    $errTyp = "danger";
+
+    $errMSG = "Something went wrong, try again later...";
+
+   }
+  }
+ }
 ?>
 
 
@@ -72,7 +218,7 @@
     <link href="css/custom.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
 
-    <title>Big Events</title>
+    <title>Psy Events</title>
 
 </head>
 
@@ -88,7 +234,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       </button>
-        <a class="navbar-brand" href="">Big Events</a>
+        <a class="navbar-brand" href="">Psy Events</a>
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
@@ -101,23 +247,35 @@
                         <ul class="dropdown-menu dropdown-lr animated flipInX" role="menu">
                             <div class="col-lg-12">
                                 <div class="text-center"><h3><b>Register</b></h3></div>
-                <form id="ajax-register-form" action="http://phpoll.com/register/process" method="post" role="form" autocomplete="off">
+
+
+                <form id="ajax-register-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" role="form" autocomplete="off">
+                   <?php
+                   if ( isset($errMSG) ) {
+                   ?>
+                  <div class="alert">
+                  <?php echo $errMSG; ?>
+                 </div>
+                  <?php
+                  }
+                  ?>
                   <div class="form-group">
-                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                    <input type="text" name="name" id="username" tabindex="1" class="form-control" placeholder="Username" value="<?php echo $name ?>" maxlength="50">
                   </div>
                   <div class="form-group">
-                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="<?php echo $email; ?>" maxlength="50">
                   </div>
                   <div class="form-group">
-                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                    <input type="password" name="pass" id="password" tabindex="2" class="form-control" placeholder="Password">
                   </div>
-                  <div class="form-group">
+                 <!--  <div class="form-group">
                     <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
-                  </div>
+                  </div> -->
                   <div class="form-group">
                     <div class="row">
                       <div class="col-xs-6 col-xs-offset-3">
-                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-info" value="Register Now">
+                        <input type="submit" name="btn-signup" id="register-submit" tabindex="4" class="form-control btn btn-info" value="Register Now">
+                        <span class="text-danger"><?php echo $passError; ?></span>
                       </div>
                     </div>
                   </div>
@@ -142,14 +300,12 @@
                                   ?>
                                     <div class="form-group">
                                         <label for="usr">Email:</label>
-                                        <input type="email" name="email" class="form-control" id="usr" value="<?php echo $email; ?>" maxlength="50"/>
-                                        <!-- <span class="text-danger"><?php echo $emailError; ?></span> -->
+                                        <input type="email" name="email" class="form-control" id="usr" value="<?php echo $email; ?>" maxlength="50"/>                                        
                                     </div>
 
                                     <div class="form-group">
                                         <label for="pwd">Password:</label>
-                                        <input type="password" name="pass" class="form-control" id="pwd" maxlength="50"/>
-                                         <!-- <span class="text-danger"><?php echo $passError; ?></span> -->
+                                        <input type="password" name="pass" class="form-control" id="pwd" maxlength="50"/>                                         
                                     </div>
 
                                     <div class="form-group">
@@ -187,35 +343,46 @@
     <main role="main">
 
       <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
+      <div class="jumbotron p-5">
         <div class="container">
-          <h1 class="display-3">Hello, world!</h1>
-          <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-          <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+          <h1 class="display-3">Psy Events</h1>
+          <p>Partys, People and more...</p>
         </div>
       </div>
 
-      <div class="container">
-        <!-- Example row of columns -->
-        <div class="row">
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
+      <div class="container" id="thumbs"> 
+      <div class="row">
+  <div class="col-md-4">
+    <div class="thumbnail">      
+        <img src="img/ev1.jpg" alt="party" style="width:100%">
+        <div class="caption">
+          <p>Lorem ipsum...</p>
+           <a href="#" class="btn btn-primary">See Profile</a>
         </div>
-
-        <hr>
+      </a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="thumbnail">
+        <img src="img/ev2.jpg" alt="party" style="width:100%">
+        <div class="caption">
+          <p>Lorem ipsum...</p>
+           <a href="#" class="btn btn-primary">See Profile</a>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="thumbnail">
+        <img src="img/ev3.jpg" alt="Fjords" style="width:100%">
+        <div class="caption">
+          <p>Lorem ipsum...</p>
+           <a href="#" class="btn btn-primary">See Profile</a>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
 
       </div> <!-- /container -->
 
