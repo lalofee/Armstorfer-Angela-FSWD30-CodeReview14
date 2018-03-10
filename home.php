@@ -4,12 +4,11 @@
 
  session_start();
 
- require_once 'dbconnect.php';
+ require_once 'actions/dbconnect.php';
 
  
 
  // if session is not set this will redirect to login page
-
  if( !isset($_SESSION['user']) ) {
 
   header("Location: index.php");
@@ -19,7 +18,6 @@
  }
 
  // select logged-in users detail
-
  $res=mysqli_query($conn, "SELECT * FROM users WHERE userId=".$_SESSION['user']);
 
  $userRow=mysqli_fetch_array($res, MYSQLI_ASSOC);
@@ -71,64 +69,79 @@
     </div>
   </nav>
 
-
-             
-
+<div>
+    <h2>Welcome - <?php echo $userRow['userName']; ?></h2>  
+    <h3>here you can add, delete and edit the events</h3>        
+</div>
         
 
-<!---//////////////////End of Jumbotron///////////////////-->
 
 
-<!---//////////////////Start of Table///////////////////-->
-<?php
+<!---//////////////////________Start of Table____show Event Data_____///////////////////-->
+<div class="container-fluid">
+   <table class="table table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Capacity</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Street</th>
+                    <th>ZIP</th>
+                    <th>City</th>
+                    <th>URL</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>    
+    <?php
 
-$sql = "SELECT media.title, author.author_surname, author.author_name, media.image, media.short_description, publisher.publisher_name, media.ISBN
-		FROM media 
-		INNER JOIN author ON media.fk_author_ID = author.author_ID
-		INNER JOIN publisher ON media.fk_publisher_ID = publisher.publisher_ID";
+     $sql = "SELECT * FROM event";
 
-$result = mysqli_query($conn, $sql);
+     $result = $conn->query($sql);
+
+                if($result->num_rows > 0) { //für admin
+                   
+                    while($row = $result->fetch_assoc()) {
+                            
+                            echo 
+
+                           "<tr>
+                            <td><img src='" . $row["image"] ."' class='images-responsive' ' style='width:100%'></td>
+                            <td>".$row['name']."</td>
+                            <td>".$row['event_date']."</td>
+                            <td>".$row['description']." </td>
+                            <td>".$row['capacity']."</td>
+                            <td>".$row['email']."</td>
+                            <td>".$row['phone']."</td>
+                            <td>".$row['street']."</td>
+                            <td>".$row['ZIP']."</td>
+                            <td>".$row['city']."</td>
+                            <td>".$row['URL']."</td>
+                            <td>".$row['type']."</td>
+                            <td>
+                                <a href='update.php?id=".$row['id']."'><button type='button' class='btn-success'>Edit</button></a>
+                                <a href='delete.php?id=".$row['id']."'><button type='button' class='btn-danger'>Delete</button></a>
+                            </td>
+                        </tr>";
+                    }
+                }else {
+                    echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
+                }
+            ?>
+            </tbody>
+        </table>
+    
+    </div>
 
 
-echo
 
-"<div class='container'>
-   <table class='table table-dark table-hover'>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Authors Name</th>
-        <th>Image</th>
-        <th>Description</th>
-        <th>Publisher</th>
-        <th>ISBN</th>
-      </tr>
-    </thead>";
 
-// fetch a next row (as long as there are some) into $row
-while($row = mysqli_fetch_assoc($result)) {
 
-	echo
 
-    "<tbody>
-      <tr>
-        <td>" . $row["title"] . "</td>
-        <td>" . $row["author_surname"] . " " . $row["author_name"] . "</td>
-        <td><img class='img' src='" . $row["image"] . "'/></td>
-        <td>" . $row["short_description"] . "</td>
-        <td>" . $row["publisher_name"] . "</td>
-        <td>" . $row["ISBN"] . "</td>
-      </tr>";
-}
-
-echo "</tbody></table></div>";
-
-// Free result set
-mysqli_free_result($result);
-// Close connection
-mysqli_close($conn);
-
-?>
 
 
  <!-- Optional JavaScript -->
@@ -138,8 +151,12 @@ mysqli_close($conn);
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
-
 <?php ob_end_flush(); ?>
+
+
+
+
+
 
 
 
