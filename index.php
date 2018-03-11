@@ -225,7 +225,11 @@
 </head>
 
 <body>
-    
+
+
+  <!-- ################################################################################# -->
+  <!--                    NAVBAR with LOGIN and REGISTRATION                             --> 
+  <!-- ################################################################################# -->
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
@@ -343,7 +347,9 @@
 
 <main role="main">
 
-      <!-- Main jumbotron -->
+  <!-- ################################################################################# -->
+  <!--                                MAIN JUMBOTRON                                     --> 
+  <!-- ################################################################################# -->
       <div class="jumbotron">
         <div class="container" id="title">
           <h1 class="display-3">Psy Events</h1>
@@ -354,7 +360,9 @@
 
 
 
-<!-- Thumbnails for Events -->
+  <!-- ################################################################################# -->
+  <!--                                  THUMBNAILS for EVENTS                            --> 
+  <!-- ################################################################################# -->
       <div class="container" id="thumbs"> 
         <div class="row">
 
@@ -378,7 +386,9 @@ echo
               <div class='caption'>
                 <h3>" . $row["name"] ."</h3>
                 <h4>" . $row["event_date"] . "</h4>
-                <a href='#'' class='btn btn-primary indigo-background white'>more...</a>
+                <form action='' method='get'>
+                <a href='view.php?id=" . $row['id'] . "'><button class='btn btn-primary indigo-background white'>more...</button></a>
+                </form>
               </div>
             </div>
           </div>";
