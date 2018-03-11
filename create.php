@@ -1,4 +1,4 @@
-<?php
+<?
 
  ob_start();
 
@@ -22,7 +22,25 @@
 
  $userRow=mysqli_fetch_array($res, MYSQLI_ASSOC);
 
+
+
+    $name = "";    
+    $event_date = "";
+    $description = "";
+    $image = "";
+    $capacity = "";
+    $email = "";
+    $phone = "";
+    $street = "";
+    $ZIP = "";
+    $city = "";
+    $URL = "";
+    $type = "";
+    $id = "";
+
+
 ?>
+
 
 
 <!doctype html>
@@ -40,8 +58,7 @@
     <link href="css/custom.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
 
-    <title>Psy Events</title>
-
+    <title>Psy Events  |  Add Events</title>
 </head>
 
 <body>
@@ -69,81 +86,78 @@
     </div>
   </nav>
 
-<div>
-    <h2>Welcome - <?php echo $userRow['userName']; ?></h2>  
-    <h3>here you can add, delete and edit events</h3>   
-    <a href='create.php'><button type='button' class='btn btn-success float-right'>Create Event</button></a>     
+
+
+<div>   
+    <h3>here you can add events</h3>        
 </div>
-        
 
 
+ 
 
-<!---//////////////////________Start of Table____show Event Data_____///////////////////-->
-<div class="container-fluid">
-   <table class="table table-hover table-responsive">
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Capacity</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Street</th>
-                    <th>ZIP</th>
-                    <th>City</th>
-                    <th>URL</th>
-                    <th>Type</th>
-                </tr>
-            </thead>
-            <tbody>    
-    <?php
-
-     $sql = "SELECT * FROM event";
-
-     $result = $conn->query($sql);
-
-                if($result->num_rows > 0) { //für admin
-                   
-                    while($row = $result->fetch_assoc()) {
-                            
-                            echo 
-
-                           "<tr>
-                            <td><img src='" . $row["image"] ."' class='images-responsive' ' style='width:100%'></td>
-                            <td>".$row['name']."</td>
-                            <td>".$row['event_date']."</td>
-                            <td>".$row['description']." </td>
-                            <td>".$row['capacity']."</td>
-                            <td>".$row['email']."</td>
-                            <td>".$row['phone']."</td>
-                            <td>".$row['street']."</td>
-                            <td>".$row['ZIP']."</td>
-                            <td>".$row['city']."</td>
-                            <td>".$row['URL']."</td>
-                            <td>".$row['type']."</td>
-                            <td>
-                                <a href='update.php?id=".$row['id']."'><button type='button' class='btn-success'>Edit</button></a>
-                                <a href='delete.php?id=".$row['id']."'><button type='button' class='btn-danger'>Delete</button></a>
-                            </td>
-                        </tr>";
-                    }
-                }else {
-                    echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
-                }
-            ?>
-            </tbody>
+<div class="container">
+        <form action="actions/a_create.php" method="post">
+        <table cellspacing="0" cellpadding="0" class="table">
+            
+            <tr>
+                <th>Name</th>
+                <td><input type="text" name="name" placeholder="Name"/></td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td><input type="text" name="event_date" placeholder="Date"/></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td><input type="text" name="description" placeholder="Description"/></td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><input type="text" name="image" placeholder="Image Link"/></td>
+            </tr>
+            <tr>
+                <th>Capacity</th>
+                <td><input type="text" name="capacity" placeholder="Capacity"/></td>
+            </tr> 
+            <tr>
+                <th>Email</th>
+                <td><input type="text" name="email" placeholder="Email"/></td>
+            </tr> 
+            <tr>
+                <th>Phone</th>
+                <td><input type="text" name="phone" placeholder="Phone"/></td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td><input type="text" name="street" placeholder="Street and number"/></td>
+            </tr>
+            <tr> 
+            	<th>Postal Code</th>   
+                <td><input type="text" name="ZIP" placeholder="ZIP"/></td>
+            </tr>  
+            	<th>City</th>  
+                <td><input type="text" name="city" placeholder="City"/></td>
+            </tr>
+            <tr>
+                <th>URL</th>
+                <td><input type="text" name="url" placeholder="URL"/></td>
+            </tr> 
+            <tr>
+                <th>Type</th>
+                <td><input type="text" name="type" placeholder="type"/></td>
+            </tr> 
+            <tr>
+                <td><button type="submit" class="btn btn-primary indigo-background white">Add Event</button></td>
+                <td><a href="home.php"><button type="button" class="btn btn-primary indigo-background white">Back</button></a></td>
+            </tr>
         </table>
-    
-    </div>
+    </form>
+
+ 
 
 
 
-
-
-
-
+ 
 
  <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -153,13 +167,3 @@
 </body>
 </html>
 <?php ob_end_flush(); ?>
-
-
-
-
-
-
-
-
-
-

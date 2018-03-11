@@ -56,3 +56,9 @@ ul.dropdown-lr {
 footer {
 	text-align:  center;
 }
+
+/* css for a_create.php */
+.alert {
+    margin-top: 8em;
+    font-size: 2em;
+} 
