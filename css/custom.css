@@ -3,7 +3,9 @@ body {
   padding-top: 3.5rem;
   background-color: black;
 }
-
+h2, h3 {
+	color: aquamarine;
+}
 
 /* General sizing */
 ul.dropdown-lr {
@@ -62,3 +64,10 @@ footer {
     margin-top: 8em;
     font-size: 2em;
 } 
+.table {
+	color:beige;
+}
+/*  override the table-hover effect  */
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: grey;
+}
