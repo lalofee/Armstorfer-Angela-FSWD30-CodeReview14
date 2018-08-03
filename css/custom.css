@@ -4,9 +4,14 @@ body {
   background-color: black;
   font-family: 'Cardo', serif;
 }
+<<<<<<< HEAD
 
 h1 {
 	font-family: 'Kaushan Script', cursive;
+=======
+h2, h3 {
+	color: aquamarine;
+>>>>>>> 26cbf54cb2fa5848d5972cee45ea8aab9bb346cc
 }
 
 /* General sizing */
@@ -97,3 +102,10 @@ footer {
     margin-top: 8em;
     font-size: 2em;
 } 
+.table {
+	color:beige;
+}
+/*  override the table-hover effect  */
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: grey;
+}
