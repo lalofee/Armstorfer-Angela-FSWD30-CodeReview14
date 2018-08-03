@@ -216,9 +216,13 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <!-- Custom styles for this template -->
+    <!-- Custom styles -->
     <link href="css/custom.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
+    <!-- Custom fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Cardo|Kaushan+Script" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+
 
     <title>Psy Events</title>
 
@@ -231,7 +235,7 @@
   <!--                    NAVBAR with LOGIN and REGISTRATION                             --> 
   <!-- ################################################################################# -->
 
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar  nav-background-color navbar-fixed-top" role="navigation">
       <div class="container-fluid">
       <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -240,11 +244,11 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       </button>
-        <a class="navbar-brand" href="">Psy Events</a>
+        <a class="navbar-brand" href="">Sugar Foot Swing Party Events</a>
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="">Home</a></li>
+         
         </ul>
         <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
@@ -279,7 +283,7 @@
                   <div class="form-group">
                     <div class="row">
                       <div class="col-xs-6 col-xs-offset-3">
-                        <input type="submit" name="btn-signup" id="register-submit" tabindex="4" class="form-control btn btn-info" value="Register Now">
+                        <input type="submit" name="btn-signup" id="register-submit" tabindex="4" class="form-control btn button-custom-color btn-info" value="Register Now">
                         <span class="text-danger"><?php echo $passError; ?></span>
                       </div>
                     </div>
@@ -320,7 +324,7 @@
                                                 <label for="remember"> Remember Me</label>
                                             </div>
                                             <div class="col-xs-5 pull-right">
-                                                <input type="submit" name="btn-login" id="login-submit" tabindex="4" class="form-control btn btn-success" value="Log In">
+                                                <input type="submit" name="btn-login" id="login-submit" tabindex="4" class="form-control btn button-custom-color btn-success" value="Log In">
                                             </div>
                                         </div>
                                     </div>
@@ -352,8 +356,8 @@
   <!-- ################################################################################# -->
       <div class="jumbotron">
         <div class="container" id="title">
-          <h1 class="display-3">Psy Events</h1>
-          <p>Partys, People and more...</p>
+          <h1 class="display-3">Sugar Foot</h1>
+          <p>See what´s new in your local Lindy Hop Scene!</p>
         </div>
       </div>
 

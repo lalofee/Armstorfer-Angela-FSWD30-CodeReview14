@@ -30,24 +30,17 @@ require_once 'dbconnect.php';
 
 <?php        	
 
-        if($_POST) {
-	   
-	    $id = $_POST['id'];
-	    
-	    $sql = "DELETE FROM event WHERE id = {$id}";
-	   
-	    if($conn->query($sql) === TRUE) {
-	   
-	        echo "<p>Successfully deleted!!</p>";
-	        echo "<a href='../home.php'><button class='btn btn-primary indigo-background white'>Back Home</button></a>";
-	 
-	    } else {
-	 
-	        echo "Error updating record : " . $conn->error;
-	    }
-	 
-	    $conn->close();
-	}
+if($_POST) {
+    $id = $_POST['id'];
+    $sql = "DELETE FROM event WHERE id = {$id}";
+    if($conn->query($sql) === TRUE) {
+        echo "<p>Successfully deleted!!</p>";
+        echo "<a href='home.php'><button type='button'>Back</button></a>";
+    } else {
+        echo "Error updating record : " . $conn->error;
+    }
+    $conn->close();
+}
 
 ?>
 

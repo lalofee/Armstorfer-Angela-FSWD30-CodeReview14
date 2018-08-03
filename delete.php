@@ -1,6 +1,8 @@
 <?php
 require_once 'actions/dbconnect.php';
 
+
+
 ?>
 
 <!doctype html>
@@ -28,6 +30,8 @@ require_once 'actions/dbconnect.php';
 
 <h3>delete event</h3>
 
+
+
 <form action="actions/a_delete.php" method="post">
     <input type="hidden" name="id" value="<?php echo $data['id'] ?>" />
     <button class="btn btn-danger">Delete Event</button>
@@ -39,3 +43,4 @@ require_once 'actions/dbconnect.php';
 
 </body>
 </html>
+
